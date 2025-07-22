@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Trendify Store</title>
+  <link rel="icon" href="Imagen de WhatsApp 2025-07-16 a las 15.30.35_b77159a5.jpg">
+
+  <style>
+     body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f4f4f4;
+      color: #333;
+      margin: 0;
+      padding: 0;
+      animation: fadeInBody 1s ease-in-out;
+    }
+
+    @keyframes fadeInBody {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    header {
+      background-color: #222;
+      color: #fff;
+      padding: 1rem;
+      text-align: center;
+   }
+
+   header.scrolled {
+  background-color: #9e9e9e;
+  transform: translateY(0);
+  opacity: 1;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    main {
+      padding: 2rem;
+      animation: fadeInMain 1.2s ease;
+    }
+
+    @keyframes fadeInMain {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    input[type="text"], select {
+      padding: 0.5rem;
+      margin: 0 auto;
+      display: block;
+      width: 300px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      margin-bottom: 1rem;
+    }
+
+    section.prod {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    article {
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      transition: transform 0.3s, box-shadow 0.3s;
+      padding: 1rem;
+      text-align: center;
+      position: relative;
+    }
+
+    article:hover {
+      transform: scale(1.03);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+    }
+
+    article img {
+      width: 100%;
+      max-height: 200px;
+      object-fit: contain;
+      border-radius: 8px;
+    }
+
+    button.buy-btn {
+      margin-top: 10px;
+      padding: 8px 16px;
+      border: none;
+      background-color: #ff3e00;
+      color: white;
+      font-weight: bold;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button.buy-btn:hover {
+      background-color: #d33200;
+    }
+
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.7);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .modal-content {
+      background: #fff;
+      padding: 2rem;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 600px;
+      text-align: left;
+      position: relative;
+      animation: fadeIn 0.3s ease-in-out;
+    }
+
+    .modal-content img {
+      width: 100%;
+      max-height: 300px;
+      object-fit: contain;
+      border-radius: 8px;
+    }
+
+    .modal-details {
+      margin-top: 1rem;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      background: #ff3e00;
+      color: white;
+      border: none;
+      font-size: 18px;
+      padding: 4px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .cart {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #222;
+      color: white;
+      padding: 1rem;
+      border-radius: 10px;
+      max-width: 300px;
+      z-index: 2000;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+    }
+
+    .cart h3 {
+      margin-top: 0;
+      font-size: 1.2rem;
+      border-bottom: 1px solid #444;
+      padding-bottom: 0.5rem;
+    }
+
+    .cart-item {
+      font-size: 0.9rem;
+      margin-bottom: 5px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .cart-item button {
+      background-color: #ff3e00;
+      border: none;
+      color: white;
+      padding: 4px 8px;
+      font-size: 0.75rem;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .cart-total {
+      border-top: 1px solid #444;
+      margin-top: 10px;
+      padding-top: 5px;
+      font-weight: bold;
+      text-align: right;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .header-buttons {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.insta-btn, .settings-btn {
+  background-color: #ff3e00;
+  color: white;
+  padding: 8px 14px;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.insta-btn:hover, .settings-btn:hover {
+  background-color: #d33200;
+}
+
+.settings-menu {
+  display: none;
+  position: absolute;
+  top: 70px;
+  right: 20px;
+  background: white;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  z-index: 3000;
+  font-size: 0.9rem;
+}
+
+.settings-menu select {
+  margin-top: 5px;
+  margin-bottom: 1rem;
+  padding: 5px;
+  width: 100%;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+.header-buttons.fixed {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  flex-direction: column;
+  align-items: flex-start;
+  z-index: 5000;
+}
+
+header.scrolled h1 {
+  display: none;
+}
+
+
+.whatsapp-header-button {
+  background-color: #ff3e00;
+  color: white;
+  padding: 8px 14px;
+  border-radius: 8px;
+  margin-left: 10px;
+  font-weight: bold;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+  display: inline-block;
+}
+
+.whatsapp-header-button:hover {
+  background-color: #d33200;
+}
+
+.blok {
+  display: flex;
+}
+
+button {
+  background-color: #ff3e00;
+  color: white;
+  padding: 8px 14px;
+  border-radius: 8px;
+  margin-left: 10px;
+  font-weight: bold;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+  display: inline-block;
+  text-decoration: none;
+  padding: 5px;
+  cursor: pointer;
+}
+
+footer {
+  background-color: #222;
+}
+
+h5 {
+  color: white;
+  text-align: center;
+}
+
+div {
+  justify-content: center;
+  justify-items: center;
+  justify-self: center;
+  align-items: center;
+  align-self: center;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.6);
+  justify-content: center;
+  align-items: center;
+  display: none;
+}
+
+.modal-content {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+  </style>
+
+</head>
+<body>
+<header>
+    <h1>Trendify Store</h1>
+    <div class="header-buttons">
+  <a href="https://www.instagram.com/trendify.tienda/" target="_blank" class="insta-btn">Instagram</a>
+  <button onclick="toggleSettings()" class="settings-btn">⚙️ Ajustes</button>
+  <a href="https://wa.me/541166603266" target="_blank" class="whatsapp-header-button">
+  WhatsApp
+</a>
+
+</div>
+
+</header>
+
+<div class="settings-menu" id="settingsMenu">
+  <label for="themeSelect">Tema:</label>
+  <select id="themeSelect" onchange="changeTheme()">
+    <option value="light">Claro</option>
+    <option value="dark">Oscuro</option>
+  </select>
+
+  <label for="languageSelect">Idioma:</label>
+  <select id="languageSelect" onchange="changeLanguage()">
+    <option value="es">Español</option>
+    <option value="pt">Português (Brasil)</option>
+    <option value="de">Deutsch</option>
+    <option value="en">English</option>
+  </select>
+</div>
+
+
+<main>
+    <h2 style="text-align: center;" >¡Acá te dejamos algunos productos destacados!</h2>
+    <input type="text" id="searchInput" placeholder="Buscar productos...">
+    <select id="categoryFilter">
+      <option value="all">Todos</option>
+      <option value="vasos">Vasos</option>
+      <option value="masajeadores">Masajeadores</option>
+      <option value="battery">Battery Pack</option>
+      <option value="airpods">Auriculares</option>
+    </select>
+    <section class="prod" id="productList">
+      <article data-category="battery" data-name="Battery Pack Apple" data-price="$12.855" data-img="Imagen de WhatsApp 2025-07-16 a las 14.50.48_eeed6e60.jpg">
+        <h3>Battery Pack Apple</h3>
+        <img src="Imagen de WhatsApp 2025-07-16 a las 14.50.48_eeed6e60.jpg">
+        <h3><strong>Precio:</strong> $12.855</h3>
+        <button class="buy-btn">Comprar</button>
+      </article>
+
+      <article data-category="airpods" data-name="Airpods Max" data-price="$89.999" data-img="https://dcdn-us.mitiendanube.com/stores/004/477/051/products/apple-airpods-max-wireless-over-ear-headphones-active-noise-cancelling-transparency-mode-personalized-spatial-audio-dolby-atmos-bluetooth-headphones-23e82cb192cd2ce25e17230530174958-1024-1024.jpg">
+        <h3>Airpods Max</h3>
+        <img src="Imagen de WhatsApp 2025-07-16 a las 14.51.04_19be836e.jpg">
+        <h3><strong>Precio:</strong> $89.999</h3>
+        <button class="buy-btn">Comprar</button>
+      </article>
+
+      <article data-category="masajeadores" data-name="Mini Masajeador" data-price="$12.000" data-img="https://acdn-us.mitiendanube.com/stores/003/024/461/products/v3-2024-05-18t114420-846-b093f85a521d80fc3117160436224376-640-0.png">
+        <h3>Mini Masajeador</h3>
+        <img src="Imagen de WhatsApp 2025-07-16 a las 14.52.47_cdecb6f4.jpg">
+        <h3><strong>Precio:</strong> $12.000</h3>
+        <button class="buy-btn">Comprar</button>
+      </article>
+
+      <article data-category="vasos" data-name="Vasos Stanley Quencher 1.2L" data-price="$15.000" data-img="https://stanleypm.vtexassets.com/arquivos/ids/160116/quencher--16-.png.png?v=638830016859170000">
+        <h3>Vasos Stanley Quencher 1.2L</h3>
+        <img src="Imagen de WhatsApp 2025-07-16 a las 14.53.24_ef7d638c.jpg">
+        <h3><strong>Precio:</strong> $15.000</h3>
+        <button class="buy-btn">Comprar</button>
+      </article>
+
+      <article data-category="vasos" data-name="Vasos Quencher Capibara" data-price="$8.000" data-img="Imagen de WhatsApp 2025-07-16 a las 17.24.19_ac0bd14f.jpg">
+        <h3>Vasos Quencher Capibara</h3>
+        <img src="Imagen de WhatsApp 2025-07-16 a las 17.24.19_ac0bd14f.jpg">
+        <h3><strong>Precio:</strong> $8.000</h3>
+        <button class="buy-btn">Comprar</button>
+      </article>
+    </section>
+  </main>
+
+  <div class="modal" id="productModal">
+    <div class="modal-content">
+      <button class="close-btn" onclick="closeModal()">X</button>
+      <h2 id="modalName"></h2>
+      <img id="modalImg" src="">
+      <div class="modal-details">
+        <p id="modalPrice"></p>
+        <p><strong>Envío:</strong> Gratis a todo el país</p>
+        <p><strong>Stock:</strong> Disponible</p>
+        <p><strong>Descripción:</strong> Producto destacado de Trendify Store. ¡Aprovechá esta oferta exclusiva!</p>
+      </div>
+      <button class="buy-btn" onclick="addToCart()">Agregar al carrito</button>
+    </div>
+  </div>
+
+  <div class="cart" id="cartBox">
+    <h3>🛒 Carrito</h3>
+    <div id="cartItems"></div>
+    <div class="cart-total">Total: $<span id="totalPrice">0</span></div>
+    <button id="checkoutBtn" class="buy-btn" style="margin-top: 10px; width: 100%;">Finalizar compra</button>
+  </div>
+
+  <div id="checkoutModal" class="modal">
+  <div class="modal-content">
+    <button class="close-btn" onclick="closeCheckout()">X</button>
+    <h2>Finalizar compra</h2>
+    <p>Total a pagar: $<span id="checkoutTotal"></span></p>
+    <input type="text" id="clientName" placeholder="Tu nombre completo">
+    <input type="email" id="clientEmail" placeholder="Tu email">
+
+    <h3>Datos para transferir:</h3>
+    <p><strong>Alias:</strong> TRENDIFY.PAGOS.AR</p>
+    <p><strong>CBU:</strong> 0720123456789012345678</p>
+    <p><strong>Banco:</strong> Santander Río</p>
+
+    <p>Una vez realizada la transferencia, envianos el comprobante a <a href="https://wa.me/541166603266" target="_blank">WhatsApp</a> o por mail a <strong>milo.reutter@gmail.com</strong></p>
+
+    <button onclick="confirmOrder()" class="buy-btn">Confirmar pedido</button>
+  </div>
+</div>
+
+
+  <footer>
+    <br>
+    <h5>©2025 Trendify Store</h5>
+    <div class="blok" >
+      <h5>Web developer:</h5>
+    <a href="https://www.instagram.com/robtiti3/">
+      <button>Robtiti3</button>
+      </a>
+    </div>
+  </footer>
+
+  <script>
+        const searchInput = document.getElementById("searchInput");
+    const categoryFilter = document.getElementById("categoryFilter");
+    const products = document.querySelectorAll("#productList article");
+
+    function filterProducts() {
+      const search = searchInput.value.toLowerCase();
+      const category = categoryFilter.value;
+
+      products.forEach(product => {
+        const name = product.getAttribute("data-name").toLowerCase();
+        const prodCategory = product.getAttribute("data-category");
+
+        const matchesSearch = name.includes(search);
+        const matchesCategory = category === "all" || category === prodCategory;
+
+        product.style.display = (matchesSearch && matchesCategory) ? "block" : "none";
+      });
+    }
+
+    searchInput.addEventListener("input", filterProducts);
+    categoryFilter.addEventListener("change", filterProducts);
+
+    let selectedProduct = null;
+    let total = 0;
+
+    document.querySelectorAll('.buy-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const article = e.target.closest("article");
+        selectedProduct = {
+          name: article.getAttribute("data-name"),
+          price: article.getAttribute("data-price"),
+          img: article.getAttribute("data-img")
+        };
+        document.getElementById("modalName").textContent = selectedProduct.name;
+        document.getElementById("modalPrice").textContent = `Precio: ${selectedProduct.price}`;
+        document.getElementById("modalImg").src = selectedProduct.img;
+        document.getElementById("productModal").style.display = "flex";
+      });
+    });
+
+    function closeModal() {
+      document.getElementById("productModal").style.display = "none";
+    }
+
+    const cartItems = document.getElementById("cartItems");
+    const totalPrice = document.getElementById("totalPrice");
+
+    function parsePrice(priceStr) {
+      return parseFloat(priceStr.replace("$", "").replace(".", ""));
+    }
+
+    function updateTotal(amount) {
+      total += amount;
+      totalPrice.textContent = total;
+    }
+
+    function addToCart() {
+  const item = document.createElement("div");
+  item.className = "cart-item";
+  const priceValue = parsePrice(selectedProduct.price);
+
+  item.innerHTML = `
+    <span>${selectedProduct.name} - ${selectedProduct.price}</span>
+    <button onclick="removeItem(this, ${priceValue})">Eliminar</button>
+  `;
+
+  cartItems.appendChild(item);
+  updateTotal(priceValue);
+  saveCart(); // Guarda el carrito
+  closeModal();
+}
+
+
+ function removeItem(button, priceValue) {
+  const item = button.parentElement;
+  item.remove();
+  updateTotal(-priceValue);
+  saveCart(); // Guarda después de eliminar
+}
+
+
+    function toggleSettings() {
+  const menu = document.getElementById("settingsMenu");
+  menu.style.display = (menu.style.display === "block") ? "none" : "block";
+}
+
+function changeTheme() {
+  const theme = document.getElementById("themeSelect").value;
+  localStorage.setItem("theme", theme); // Guarda el tema seleccionado
+
+  if (theme === "dark") {
+    document.body.style.backgroundColor = "#111";
+    document.body.style.color = "#fff";
+    document.querySelector("header").style.backgroundColor = "#000";
+    document.querySelectorAll("article").forEach(a => a.style.background = "#222");
+  } else {
+    document.body.style.backgroundColor = "#f4f4f4";
+    document.body.style.color = "#333";
+    document.querySelector("header").style.backgroundColor = "#222";
+    document.querySelectorAll("article").forEach(a => a.style.background = "#fff");
+  }
+}
+
+
+function changeLanguage() {
+  const lang = document.getElementById("languageSelect").value;
+  localStorage.setItem("language", lang); // Guarda el idioma seleccionado
+
+  const translations = {
+    es: {
+      title: "Trendify Store",
+      destacados: "¡Acá te dejamos algunos productos destacados!",
+      carrito: "🛒 Carrito",
+      eliminar: "Eliminar",
+      envio: "Gratis a todo el país",
+      stock: "Disponible",
+      descripcion: "Producto destacado de Trendify Store. ¡Aprovechá esta oferta exclusiva!",
+      agregar: "Agregar al carrito"
+    },
+    pt: {
+      title: "Trendify Loja",
+      destacados: "Aqui estão alguns produtos em destaque!",
+      carrito: "🛒 Carrinho",
+      eliminar: "Remover",
+      envio: "Frete grátis para todo o país",
+      stock: "Disponível",
+      descripcion: "Produto em destaque da Trendify Store. Aproveite esta oferta exclusiva!",
+      agregar: "Adicionar ao carrinho"
+    },
+    de: {
+      title: "Trendify Geschäft",
+      destacados: "Hier sind einige empfohlene Produkte!",
+      carrito: "🛒 Warenkorb",
+      eliminar: "Entfernen",
+      envio: "Kostenloser Versand im ganzen Land",
+      stock: "Verfügbar",
+      descripcion: "Top-Produkt bei Trendify Store. Nutze dieses exklusive Angebot!",
+      agregar: "In den Warenkorb"
+    },
+    en: {
+      title: "Trendify Store",
+      destacados: "Here are some featured products!",
+      carrito: "🛒 Cart",
+      eliminar: "Remove",
+      envio: "Free shipping nationwide",
+      stock: "Available",
+      descripcion: "Featured product at Trendify Store. Take advantage of this exclusive offer!",
+      agregar: "Add to cart"
+    }
+  };
+
+  const t = translations[lang];
+
+  document.querySelector("h1").textContent = t.title;
+  document.querySelector("main h2").textContent = t.destacados;
+  document.querySelector(".cart h3").textContent = t.carrito;
+  document.querySelectorAll(".cart-item button").forEach(btn => btn.textContent = t.eliminar);
+  document.querySelector("#productModal .modal-details").innerHTML = `
+    <p><strong>${t.envio}</strong></p>
+    <p><strong>${t.stock}</strong></p>
+    <p><strong>${t.descripcion}</strong></p>
+  `;
+  document.querySelector("#productModal button.buy-btn").textContent = t.agregar;
+};
+
+
+  const t = translations[lang];
+
+  document.querySelector("h1").textContent = t.title;
+  document.querySelector("main h2").textContent = t.destacados;
+  document.querySelector(".cart h3").textContent = t.carrito;
+  document.querySelectorAll(".cart-item button").forEach(btn => btn.textContent = t.eliminar);
+  document.querySelector("#productModal .modal-details").innerHTML = `
+    <p><strong>${t.envio}</strong></p>
+    <p><strong>${t.stock}</strong></p>
+    <p><strong>${t.descripcion}</strong></p>
+  `;
+  document.querySelector("#productModal button.buy-btn").textContent = t.agregar;
+
+  function saveCart() {
+  const items = [];
+  document.querySelectorAll(".cart-item").forEach(item => {
+    const [name, price] = item.innerText.replace("Eliminar", "").trim().split(" - ");
+    items.push({ name, price });
+  });
+  localStorage.setItem("cart", JSON.stringify(items));
+  localStorage.setItem("total", total);
+}
+
+function loadCart() {
+  const items = JSON.parse(localStorage.getItem("cart")) || [];
+  total = parseInt(localStorage.getItem("total")) || 0;
+  totalPrice.textContent = total;
+
+  items.forEach(({ name, price }) => {
+    const priceValue = parsePrice(price);
+    const item = document.createElement("div");
+    item.className = "cart-item";
+    item.innerHTML = `
+      <span>${name} - ${price}</span>
+      <button onclick="removeItem(this, ${priceValue})">Eliminar</button>
+    `;
+    cartItems.appendChild(item);
+  });
+}
+
+  const greetings = {
+    es: "¡Bienvenido a Trendify Store!",
+    pt: "Bem-vindo à Trendify Store!",
+    de: "Willkommen bei Trendify Store!",
+    en: "Welcome to Trendify Store!"
+  };
+
+  alert(greetings[lang]);
+
+  window.addEventListener("scroll", () => {
+  const header = document.querySelector("header");
+  const buttons = document.querySelector(".header-buttons");
+
+  if (window.scrollY > 50) {
+    header.classList.add("scrolled");
+    buttons.classList.add("fixed");
+  } else {
+    header.classList.remove("scrolled");
+    buttons.classList.remove("fixed");
+  }
+});
+
+window.addEventListener("DOMContentLoaded", () => {
+  const savedTheme = localStorage.getItem("theme") || "light";
+  const savedLanguage = localStorage.getItem("language") || "es";
+
+  document.getElementById("themeSelect").value = savedTheme;
+  changeTheme();
+
+  document.getElementById("languageSelect").value = savedLanguage;
+  changeLanguage();
+
+  loadCart();
+});
+
+window.addEventListener("scroll", () => {
+  const header = document.querySelector("header");
+  const buttons = document.querySelector(".header-buttons");
+
+  if (window.scrollY > 50) {
+    header.classList.add("scrolled");
+    buttons.classList.add("fixed");
+  } else {
+    header.classList.remove("scrolled");
+    buttons.classList.remove("fixed");
+  }
+});
+
+document.getElementById("checkoutBtn").addEventListener("click", () => {
+  const name = document.getElementById("clientName");
+  const email = document.getElementById("clientEmail");
+  name.value = "";
+  email.value = "";
+  document.getElementById("checkoutTotal").textContent = total;
+  document.getElementById("checkoutModal").style.display = "flex";
+});
+
+
+function closeCheckout() {
+  document.getElementById("checkoutModal").style.display = "none";
+}
+
+function confirmOrder() {
+  const name = document.getElementById("clientName").value.trim();
+  const email = document.getElementById("clientEmail").value.trim();
+
+  if (!name || !validateEmail(email)) {
+    alert("Por favor ingresá un nombre y un correo válido.");
+    return;
+  }
+
+  alert(`Gracias por tu compra, ${name}. Te enviamos los pasos por correo.`);
+
+  cartItems.innerHTML = "";
+  total = 0;
+  totalPrice.textContent = total;
+  localStorage.removeItem("cart");
+  localStorage.removeItem("total");
+
+  closeCheckout();
+}
+
+function validateEmail(email) {
+  const re = /\S+@\S+\.\S+/;
+  return re.test(email);
+}
+
+
+  </script>
+
+</body>
+</html>
